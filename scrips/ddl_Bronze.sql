@@ -11,6 +11,7 @@
 /*Droping the tables if  they exists and Creating the required tabels:*/
 IF OBJECT_ID('bronze.crm_cust_id','U') IS NOT NULL
   DROP TABLE bronze.crm_cust_id
+  GO
 CREATE TABLE bronze.crm_cust_id
 (
   cst_id INT,
@@ -21,9 +22,11 @@ CREATE TABLE bronze.crm_cust_id
   cst_gndr NVARCHAR(50) ,
   cst_create_date DATE
 );
+GO
 
 IF OBJECT_ID(' bronze.crm_prd_info','U') IS NOT NULL
   DROP TABLE  bronze.crm_prd_info
+  GO
 CREATE TABLE bronze.crm_prd_info
 (
   prd_id INT,
@@ -34,8 +37,11 @@ CREATE TABLE bronze.crm_prd_info
   prd_start_dt DATETIME,
   prd_end_dt DATETIME
 );
+GO
+  
 IF OBJECT_ID('bronze.crm_sales_details ','U') IS NOT NULL
   DROP TABLE  bronze.crm_sales_details
+  GO
 CREATE TABLE bronze.crm_sales_details
 (
   sls_ord_num NVARCHAR(50),
@@ -48,25 +54,32 @@ CREATE TABLE bronze.crm_sales_details
   sls_quantity INT ,
   sls_price INT 
 );
+gO
 
 IF OBJECT_ID('bronze.erp_cust_AZ12','U') IS NOT NULL
   DROP TABLE  bronze.erp_cust_AZ12
+  GO
 CREATE TABLE bronze.erp_cust_AZ12
 (
   CID NVARCHAR(50),
   BDATE DATE,
   GEN NVARCHAR(50)
 );
+GO
+  
 IF OBJECT_ID('bronze.erp_loc_A101','U') IS NOT NULL
   DROP TABLE  bronze.erp_loc_A101
+  GO
 CREATE TABLE bronze.erp_loc_A101
 (
   CID NVARCHAR(50),
   CNTRY NVARCHAR(50)
 )
+  GO
 
   IF OBJECT_ID('bronze.erp_px_cat_g1v2','U') IS NOT NULL
   DROP TABLE  bronze.erp_px_cat_g1v2
+  GO
 CREATE TABLE bronze.erp_px_cat_g1v2
 (
   ID NVARCHAR(50),
@@ -74,3 +87,4 @@ CREATE TABLE bronze.erp_px_cat_g1v2
   SUBCAT NVARCHAR(50) ,
   MAINTENANCE NVARCHAR(50)
 );
+GO
