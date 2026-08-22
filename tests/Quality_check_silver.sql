@@ -79,6 +79,90 @@ WHERE prd_end_dt < prd_start_dt
 --CHECKING: 'silver.crm_sales_details'
 -- ===============================================================================================================
 
+--1.Checking for invalid date ranges.
+SELECT 
+    NULLIF(sls_due_dt, 0) AS sls_due_dt 
+FROM bronze.crm_sales_details
+WHERE sls_due_dt <= 0 
+    OR LEN(sls_due_dt) != 8 
+    OR sls_due_dt > 20500101 
+    OR sls_due_dt < 19000101;
+
+--2.Invalid order dates.
+SELECT 
+  *
+FROM bronze.crm_sales_details
+WHERE  sls_order_dt > sls_ship_dt
+OR     sls_order_dt > sls_end_dt;
+
+--3.Checking Data consistency i.e (sls_sales = sls_quantity * sls_price )--valid calculation
+SELECT DISTINCT 
+    sls_sales,
+    sls_quantity,
+    sls_price 
+FROM silver.crm_sales_details
+WHERE sls_sales != sls_quantity * sls_price
+   OR sls_sales IS NULL 
+   OR sls_quantity IS NULL 
+   OR sls_price IS NULL
+   OR sls_sales <= 0 
+   OR sls_quantity <= 0 
+   OR sls_price <= 0
+ORDER BY sls_sales, sls_quantity, sls_price;
+
+-- ==============================================================================================================
+--CHECKING: 'silver.erp_cust_az12'
+-- ===============================================================================================================
+
+--1.Invalid bdate of the customers
+SELECT 
+  bdate
+FROM silver.erp_cust_az12
+WHERE bdate > GETDATE()
+   OR bdate < '1924-01-01'
+
+--2.Distinct gender values
+SELECT  DISTINCT 
+   gen
+FROM silver.erp_cust_az12;
+
+-- ==============================================================================================================
+--CHECKING: 'silver.erp_loc_a101'
+-- ===============================================================================================================
+
+--1.Distinct country values 
+SELECT DISTINCT
+  cntry           
+FROM silver.erp_loc_a101
+ORDER BY cntry   
+
+
+-- ==============================================================================================================
+--CHECKING: 'silver.erp_px_cat_g1v2'
+-- ===============================================================================================================
+
+--1.Checking for unwanted spaces.
+SELECT 
+ *
+FROM silver.erp_loc_a101
+WHERE cat != TRIM(cat)
+   OR subcat != TRIM(subcat)
+   OR maintenance != TRIM(maintenance)
+
+--2.Distinct maintanance values
+SELECT DISTINCT 
+  maintanance 
+FROM silver.erp_loc_a101
+
+
+
+
+
+
+
+
+  
+
 
 
 
