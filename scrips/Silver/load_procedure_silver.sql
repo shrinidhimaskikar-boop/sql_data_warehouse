@@ -78,6 +78,7 @@ BEGIN
  INSERT INTO silver.crm_prd_info
  (
     prd_id,
+	cat_id,
     prd_key,
     prd_nm,
     prd_cost,
@@ -87,7 +88,8 @@ BEGIN
  )
 
 SELECT 
-      prd_id,   --Extracted category ID
+      prd_id,--Extracted category ID
+	  REPLACE(SUBSTRING(prd_key, 1, 5), '-', '_') AS cat_id, --Extracting category id
       SUBSTRING(prd_key,7,LEN(prd_key)) AS prd_key,    --Extracted product key
       TRIM(prd_nm) AS prd_nm,
       ISNULL(prd_cost, 0)AS prd_cost,
@@ -99,7 +101,7 @@ SELECT
         ELSE 'N/A'                                        --Transformed the map line code into readable format
       END prd_line,
       CAST(prd_start_dt AS DATE) AS prd_start_dt,         
-      CAST(LEAD(prd_start_dt)  OVER (PARTITION BY prd_key ORDER BY prd_start_dt )-1 AS DATE) AS prd_end_dt--Calculated the edn date as one day before the next start date
+      CAST(LEAD(prd_start_dt)  OVER (PARTITION BY prd_key ORDER BY prd_start_dt )-1 AS DATE) AS prd_end_dt--Calculated the end date as one day before the next start date
  FROM bronze.crm_prd_info
  SET @end_time = GETDATE()
  PRINT '>> Load Duration: ' + CAST(DATEDIFF(SECOND, @start_time, @end_time) AS NVARCHAR) + ' seconds';
