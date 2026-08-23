@@ -1,4 +1,13 @@
-
+/*
+=====================================================================================================================
+Creating view-Gold layer
+=======================================================================================================================
+Purpose:
+The purpose of this script is to create a view for GOLD layer in the Data Warehouse.
+The gold layer represents the final dimensions and fact values
+Each view performs operations like transformation and combines the data from Silver Layer to produce clean data,
+consistency in the formatting by providing values which are business related.
+*/
 
 /*============================================================================================================
   Creating dimension: gold.dim_customers
